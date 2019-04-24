@@ -1,0 +1,24 @@
+PATH
+  remote: .
+  specs:
+    number_range (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    minitest (5.11.3)
+    rake (10.5.0)
+    timecop (0.9.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.17)
+  minitest (~> 5.0)
+  number_range!
+  rake (~> 10.0)
+  timecop (~> 0.9.0)
+
+BUNDLED WITH
+   1.17.2
