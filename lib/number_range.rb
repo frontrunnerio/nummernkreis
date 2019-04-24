@@ -5,14 +5,16 @@ class NumberRange
   class Error < StandardError; end
 
   def initialize pattern
-    @parser = PatternParser.new pattern
+    @pattern = pattern
+    @number = PatternParser.new(pattern).sample
   end
 
   def to_s
-    @parser.sample
+    @number
   end
 
   def next
+
   end
 
   def self.parse pattern
@@ -26,6 +28,7 @@ class NumberRange
     def initialize pattern
       @state = []
       @buffer = []
+      @number_parsed = false
       parse pattern
     end
 
@@ -49,21 +52,18 @@ class NumberRange
         when '#'
           process_current_state unless @state.include? :number
           @state << :number
-        when ' '
-          process_current_state
-          @state << :space
         when '-'
           process_current_state
           @state << :dash
         else
-          throw Error
+          raise Error.new "token not recognized: #{token}"
         end
       end
       process_current_state
     end
 
     def process_current_state
-      throw Error if @state.uniq.length > 1
+      raise Error.new 'error in parser' if @state.uniq.length > 1
 
       case @state.first
       when :year
@@ -73,18 +73,18 @@ class NumberRange
         when 4
           @buffer << Date.today.strftime('%Y')
         else
-          throw Error
+          raise Error.new 'year has 2 or 4 characters'
         end
       when :month
-        throw Error if @state.length != 2
+        raise Error.new 'month has two characters' if @state.length != 2
         @buffer << Date.today.strftime('%m')
       when :day
-        throw Error if @state.length != 2
+        raise Error.new 'day has two characters' if @state.length != 2
         @buffer << Date.today.strftime('%d')
       when :number
+        raise Error.new('can only have one number part') if @number_parsed
         @buffer << format("%0#{@state.length}d", 1)
-      when :space
-        @buffer << ' '
+        @number_parsed = true
       when :dash
         @buffer << '-'
       end

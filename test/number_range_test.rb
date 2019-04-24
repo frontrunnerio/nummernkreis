@@ -53,13 +53,19 @@ describe NumberRange do
       assert_equal '00001', NumberRange.parse('#####').to_s
     end
 
-    it 'parses spaces and dashes as strings' do
-      assert_equal ' ', NumberRange.parse(' ').to_s
+    it 'parses dashes as strings' do
       assert_equal '-', NumberRange.parse('-').to_s
     end
 
     it 'parses combined statements' do
+      assert_equal '20190001', NumberRange.parse('yyyy####').to_s
       assert_equal '190301-01', NumberRange.parse('yymmdd-##').to_s
+    end
+
+    it 'cannot have more than one number part' do
+      assert_raises NumberRange::Error do
+        NumberRange.new('yy##dd##')
+      end
     end
   end
 
