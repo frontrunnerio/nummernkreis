@@ -29,8 +29,9 @@ class Nummernkreis
     @number = "#{before_digits}#{new_digits}#{after_digits}"
   end
 
-  def self.parse pattern
-    self.new pattern
+  def parse number
+    @number = number
+    self
   end
 
   private

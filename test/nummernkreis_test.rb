@@ -82,4 +82,13 @@ describe Nummernkreis do
     end
   end
 
+  describe '#parse' do
+    it 'sets the number and returns the number range' do
+      range = Nummernkreis.new('yymmdd-##').parse('181231-04')
+      assert_equal '181231-04', range.to_s
+      assert_equal '181231-05', range.next
+      assert_equal '181231-06', range.next
+    end
+  end
+
 end
