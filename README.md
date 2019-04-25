@@ -1,15 +1,13 @@
-# NumberRange
+# Nummernkreis
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/number_range`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem implements a number range ("Nummernkreis" in German) which is very common for German documents like invoices where the invoice number is not just a number sequence but also includes date components.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'number_range'
+gem 'nummernkreis'
 ```
 
 And then execute:
@@ -18,11 +16,37 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install number_range
+    $ gem install nummernkreis
 
 ## Usage
 
-TODO: Write usage instructions here
+When generating a new number range you need to specify its pattern.
+The following components are possible:
+
+```
+  yyyy: year with full 4 digits (e.g. 1980 or 2019)
+    yy: year with two digits (e.g. 19 for 2019)
+    mm: month starting with 1 (e.g. 02 for February)
+    dd: day of the month starting with 1 (e.g. 01 for first day)
+    - : dash separator
+    # : part of the sequence that will be incremented.
+```
+
+Examples (assuming current date is 2019-04-15):
+
+```ruby
+  Nummernkreis.new('####').to_s
+  # '0001'
+
+  Nummernkreis.new('yymmdd-##').to_s
+  # '190425-01'
+
+  Nummernkreis.new('yymmdd-##').next
+  # '190425-02'
+
+  Nummernkreis.new('yymmdd-##').parse('181231-04').next
+  # '181231-05'
+```
 
 ## Development
 
@@ -32,12 +56,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/number_range. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/deepflame/nummernkreis.
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
-## Code of Conduct
-
-Everyone interacting in the NumberRange project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/number_range/blob/master/CODE_OF_CONDUCT.md).
