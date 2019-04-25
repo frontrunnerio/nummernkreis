@@ -2,6 +2,14 @@ require "test_helper"
 
 describe NumberRange do
 
+  before do
+    Timecop.freeze Date.parse('2019-03-01')
+  end
+
+  after do
+    Timecop.return
+  end
+
   it 'has a version number' do
     refute_nil ::NumberRange::VERSION
   end
@@ -16,15 +24,6 @@ describe NumberRange do
   end
 
   describe 'parse' do
-    before do
-      @date = Date.parse('2019-03-01')
-      Timecop.freeze @date
-    end
-
-    after do
-      Timecop.return
-    end
-
     it 'parses yyyy as year with 4 digits' do
       assert_equal '2019', NumberRange.parse('yyyy').to_s
     end
@@ -53,13 +52,14 @@ describe NumberRange do
       assert_equal '00001', NumberRange.parse('#####').to_s
     end
 
-    it 'parses dashes as strings' do
+    it 'parses dash as string' do
       assert_equal '-', NumberRange.parse('-').to_s
     end
 
     it 'parses combined statements' do
       assert_equal '20190001', NumberRange.parse('yyyy####').to_s
       assert_equal '190301-01', NumberRange.parse('yymmdd-##').to_s
+      assert_equal '0101-2019', NumberRange.parse('dd##-yyyy').to_s
     end
 
     it 'cannot have more than one number part' do
@@ -70,6 +70,17 @@ describe NumberRange do
   end
 
   describe '#next' do
+    it 'returns the next number in the range' do
+      range = NumberRange.new('yymmdd-##')
+      assert_equal '190301-01', range.to_s
+      assert_equal '190301-02', range.next
+      assert_equal '190301-03', range.next
+
+      range = NumberRange.new('####-ddmmyy')
+      assert_equal '0001-010319', range.to_s
+      assert_equal '0002-010319', range.next
+      assert_equal '0003-010319', range.next
+    end
   end
 
 end
