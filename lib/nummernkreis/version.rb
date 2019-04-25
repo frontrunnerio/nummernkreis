@@ -1,3 +1,3 @@
-class NumberRange
+class Nummernkreis
   VERSION = "0.1.0"
 end

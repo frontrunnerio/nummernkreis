@@ -1,7 +1,7 @@
-require "number_range/version"
+require "nummernkreis/version"
 require 'date'
 
-class NumberRange
+class Nummernkreis
   class Error < StandardError; end
 
   def initialize pattern

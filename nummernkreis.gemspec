@@ -1,11 +1,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "number_range/version"
+require "nummernkreis/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "number_range"
-  spec.version       = NumberRange::VERSION
+  spec.name          = "nummernkreis"
+  spec.version       = Nummernkreis::VERSION
   spec.authors       = ["Andreas Böhrnsen"]
   spec.email         = ["andreas@frontrunner.io"]
 

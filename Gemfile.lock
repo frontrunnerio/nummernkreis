@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    number_range (0.1.0)
+    nummernkreis (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -16,7 +16,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.17)
   minitest (~> 5.0)
-  number_range!
+  nummernkreis!
   rake (~> 10.0)
   timecop (~> 0.9.0)
 
