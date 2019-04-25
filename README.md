@@ -59,6 +59,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/frontrunnerio/nummernkreis.
+You can just use Gitpod and start hacking.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/frontrunnerio/nummernkreis)
 
 ## License
 
