@@ -1,5 +1,7 @@
 # Nummernkreis
 
+[![Build Status](https://travis-ci.org/frontrunnerio/nummernkreis.svg?branch=master)](https://travis-ci.org/frontrunnerio/nummernkreis)
+
 This gem implements a number range ("Nummernkreis" in German) which is very common for German documents like invoices where the invoice number is not just a number sequence but also includes date components.
 
 ## Installation
