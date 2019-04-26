@@ -6,27 +6,20 @@ class Nummernkreis
 
   def initialize pattern
     @pattern = pattern
-    @number = PatternParser.new(pattern).sample
+    @number_now = PatternParser.new(pattern).sample
+    @number = @number_now
   end
 
   def to_s
     @number
   end
 
-  def next
-    digit_count = @pattern.split('').count('#')
-    raise Error.new('only works if pattern has a digit part') if digit_count == 0
-
-    digits_start_at = @pattern.index('#')
-    digits_end_at = @pattern.rindex('#')
-
-    before_digits = digits_start_at < 1 ? '' : @number[0..digits_start_at-1]
-    digits = @number[digits_start_at..digits_end_at]
-    after_digits = @number[digits_end_at+1..@number.length]
-
-    new_digits = format("%0#{digit_count}d", digits.to_i + 1)
-
-    @number = "#{before_digits}#{new_digits}#{after_digits}"
+  def next(now: false)
+    @number = if now && !numbers_equal_without_digits?(@number, @number_now)
+                @number_now
+              else
+                increment_number_digits @number
+              end
   end
 
   def parse number
@@ -35,6 +28,33 @@ class Nummernkreis
   end
 
   private
+
+  def increment_number_digits number
+    digit_count = @pattern.split('').count('#')
+    raise Error.new('only works if pattern has a digit part') if digit_count == 0
+
+    before_digits, digits, after_digits = decompose_number_parts(@number)
+    new_digits = format("%0#{digit_count}d", digits.to_i + 1)
+
+    "#{before_digits}#{new_digits}#{after_digits}"
+  end
+
+  def numbers_equal_without_digits? number1, number2
+    parts1 = decompose_number_parts number1
+    parts2 = decompose_number_parts number2
+    parts1[0] == parts2[0] && parts1[2] == parts2[2]
+  end
+
+  def decompose_number_parts number
+    digits_start_at = @pattern.index('#')
+    digits_end_at = @pattern.rindex('#')
+
+    [
+      digits_start_at < 1 ? '' : number[0..digits_start_at-1],
+      number[digits_start_at..digits_end_at],
+      number[digits_end_at+1..number.length]
+    ]
+  end
 
   class PatternParser
 

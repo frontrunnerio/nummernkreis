@@ -91,4 +91,14 @@ describe Nummernkreis do
     end
   end
 
+  describe '#next(now: true)' do
+    it 'returns the next number in the range' do
+      range = Nummernkreis.new('yymmdd-##').parse('181231-04')
+      assert_equal '181231-04', range.to_s
+      assert_equal '190301-01', range.next(now: true)
+      assert_equal '190301-02', range.next
+      assert_equal '190301-03', range.next(now: true)
+    end
+  end
+
 end
