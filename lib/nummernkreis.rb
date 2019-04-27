@@ -1,27 +1,48 @@
 require "nummernkreis/version"
 require 'date'
 
+# Nummernkreis
+#
+# class to generate and increment number ranges based on a simple pattern
+#
+# pattern can include:
+#
+# yyyy::  year with 4 digit representation (e.g. 2018)
+# yy::    year with 2 digit representation (e.g. 80 for 1980)
+# mm::    month with 2 digits (e.g. 03 for March)
+# dd::    day of the month with 2 digits (e.g. 01 for the first day)
+# -::     dash separator
+# #::     placeholder for variable digit part / counter (e.g. 001 as first value for ###)
+#
 class Nummernkreis
   class Error < StandardError; end
 
+  # @param pattern [String] number range pattern
   def initialize pattern
     @pattern = pattern
     @number_now = PatternParser.new(pattern).sample
     @number = @number_now
   end
 
+  # returns the current number range string
+  # @return [String] current number range
   def to_s
     @number
   end
 
+  # increments the digit part of the number range
+  # @param now [Boolean] if the next number should be generated for today
+  # @return [String] next number range
   def next(now: false)
     @number = if now && !numbers_equal_without_digits?(@number, @number_now)
                 @number_now
               else
-                increment_number_digits @number
+                increment_digits_for_number @number
               end
   end
 
+  # "parses" the number range (sets the current number range)
+  # @return [Nummernkreis] instance
   def parse number
     @number = number
     self
@@ -29,7 +50,7 @@ class Nummernkreis
 
   private
 
-  def increment_number_digits number
+  def increment_digits_for_number number
     digit_count = @pattern.split('').count('#')
     raise Error.new('only works if pattern has a digit part') if digit_count == 0
 
@@ -129,4 +150,3 @@ class Nummernkreis
   end
 
 end
-
