@@ -48,6 +48,12 @@ Examples (assuming current date is 2019-04-15):
 
   Nummernkreis.new('yymmdd-##').parse('181231-04').next
   # '181231-05'
+
+  Nummernkreis.new('yymmdd-##').parse('181231-04').next(now: true)
+  # '190425-01'
+
+  Nummernkreis.new('yymmdd-##').parse('181231-04').next(now: true)
+  # '190425-02'
 ```
 
 ## Development
