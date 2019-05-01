@@ -1,10 +1,17 @@
----
 sudo: false
 language: ruby
 cache: bundler
 rvm:
-  - 2.0
-  - 2.2
-  - 2.6
+- 2.0
+- 2.2
+- 2.6
 before_install: gem install bundler -v 1.17.2
 script: bundle exec rake test
+deploy:
+  provider: rubygems
+  api_key:
+    secure: Wqs0XtfWzevTGwN+4Zz3oIy2ULpjxmha2h9Kb1mGzzc586g8Mb/ptzQiXHFdZmQYRgVQooBrKnr26H3cEQfX+OHK44/zpbKm8X1bmeEnMCO2+lYycRaraJw0F814yT1QpoSbHY5OHa3yfd2Knudwxirx+Fqohypap/NBG22PFDbVXl9OmP2sdIfESeSoUjVqZrTlLjchl2pQyUPkoFA0+ZM5NQkmAuJ9cEkbv9D0xbENLc76WwXGAmLdYxjdeg/OssHITYxivi2lH/uszpYYSjXz5jG3c5fF47Cn6H1ctLGCmzAsLg5OVXg35j26bedr1hGS+C0TGAWvf7cet7oqEmM8fSA7Tp5vEd2aMAdaLL/XM4fihbT+1IugZ11HNOhGtz1YsYXY1Cm9TA8LcQjGhxxjXnXyWDpPxyavjo1/VG0MO8d3dgV6RcyjQdxfPLjdrOEOX+8+gi6y5jWg/Zh4vEs6KshPJyPxZol/pfnOs3Dj8dl3Pm1T35oTvV7iWr7fY0EdhEzltcSOSFlfSPcTvoO6Xf5+nefs0gTJOCeeI3lZt2hd54kK9RdYWv6I6JumB0FEzHwlliSFmFkmiY2om1JQKhLrQF5ar5GnxcNdC+baOOkHOR+k2KiZxA0v+u1/3h2rOHA3MfY9m9H8lLt2iYOGXHYddDiP9d2f+3GkJMg=
+  gem: nummernkreis
+  on:
+    tags: true
+    repo: frontrunnerio/nummernkreis
